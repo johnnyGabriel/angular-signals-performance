@@ -1,0 +1,45 @@
+section.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: .1s;
+    max-width: 300px;
+    border: 1px solid rgb(244, 241, 241);
+}
+
+button {
+    padding: 0.5rem 1rem;
+    background-color: rgb(234, 236, 255);
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 10%;
+    font-weight: bold;
+    color: gray;
+    cursor: pointer;
+}
+
+button.active {
+    background-color: rgb(84, 84, 240);
+    color: white;
+}
+
+.greater-update {
+    background-color: rgb(124, 232, 124);
+}
+
+.minor-update {
+    background-color: rgb(238, 95, 95);
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+
+    button {
+        margin-right: .5rem;
+    }
+
+    button:first-child {
+        margin-left: .5rem;
+    }
+}

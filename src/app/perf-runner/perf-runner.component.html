@@ -1,0 +1,18 @@
+<section class="wrapper" 
+    [class.greater-update]="isGreaterUpdate()" 
+    [class.minor-update]="isMinorUpdate()">
+
+    <p>Previous value: {{ previousValue() }}</p>
+    <p>Current value: {{ value() }}</p>
+
+    <h3>Updates per second:</h3>
+
+    <div class="btn-group">
+        @for (rateOption of rateOptions(); track rateOption.rate) {
+            <button [class.active]="rateOption.active" (click)="setIntervalTime(rateOption)">
+                {{ rateOption.rate }}x
+            </button>
+        }
+    </div>
+
+</section>
