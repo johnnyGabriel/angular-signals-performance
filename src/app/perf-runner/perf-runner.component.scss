@@ -2,7 +2,7 @@ section.wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: .1s;
+    transition: .3s;
     max-width: 300px;
     border: 1px solid rgb(244, 241, 241);
 }
@@ -30,6 +30,10 @@ button.active {
     background-color: rgb(238, 95, 95);
 }
 
+.equal-update {
+    background-color: rgb(93, 156, 250);
+}
+
 .btn-group {
     display: flex;
     flex-direction: row;
@@ -41,5 +45,14 @@ button.active {
 
     button:first-child {
         margin-left: .5rem;
+    }
+}
+
+.occurrence-counter {
+    display: flex;
+    flex-direction: row;
+
+    p {
+        margin: 0 0.5rem;
     }
 }

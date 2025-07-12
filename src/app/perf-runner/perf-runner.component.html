@@ -1,9 +1,17 @@
 <section class="wrapper" 
-    [class.greater-update]="isGreaterUpdate()" 
-    [class.minor-update]="isMinorUpdate()">
+    [class.greater-update]="value() > previousValue()" 
+    [class.equal-update]="value() === previousValue()" 
+    [class.minor-update]="value() < previousValue()">
 
     <p>Previous value: {{ previousValue() }}</p>
     <p>Current value: {{ value() }}</p>
+
+    <div class="occurrence-counter">
+        @let count = occurrenceCount();
+        <p>< {{ count.minor }}, </p>
+        <p>= {{ count.equal }}, </p>
+        <p>> {{ count.greater }}</p>
+    </div>
 
     <h3>Updates per second:</h3>
 

@@ -1,10 +1,16 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, linkedSignal, signal } from '@angular/core';
 import { switchMap, tap, timer } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
 interface RateOption {
   rate: number;
   active: boolean;
+}
+
+interface OccurrenceCount { 
+  greater: number; 
+  equal: number; 
+  minor: number 
 }
 
 @Component({
@@ -21,17 +27,6 @@ export class PerfRunnerComponent {
   
   private timer = toObservable(this.interval).pipe(
     switchMap(intervalTime => timer(0, intervalTime)),
-    tap(_ => {
-      this.previousValue.set(this.value());
-      this.value.set(Math.floor(Math.random() * 10));
-
-      let updateFlag = (this.value() > this.previousValue()) ? this.isGreaterUpdate : this.isMinorUpdate;
-      updateFlag.set(true);
-      setTimeout(() => {
-        updateFlag.set(false);
-      }, (this.interval() > 500) ? 200 : this.interval()/2);
-      
-    })
   );
 
   protected rateOptions = signal<RateOption[]>([
@@ -42,22 +37,36 @@ export class PerfRunnerComponent {
     { rate: 10, active: false },
   ]);
 
-  protected isGreaterUpdate = signal(false);
-  protected isMinorUpdate = signal(false);
+  protected occurrenceCount = linkedSignal<number[], OccurrenceCount>({
+    source: () => [this.value(), this.previousValue()],
+    computation: ([value, previousValue], previous) => {
+      let count = { greater: 0, equal: 0, minor: 0, 
+        ...previous?.value || {}
+      };
+      if (value > previousValue) count.greater++;
+      else if (value < previousValue) count.minor++;
+      else count.equal++;
+      return count;
+    }
+  });
 
   protected value = signal<number>(0);
   protected previousValue = signal<number>(0);
 
   constructor() {
-    this.timer
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    this.timer.pipe(
+      takeUntilDestroyed(this.destroyRef),
+      tap(_ => {
+        this.previousValue.set(this.value());
+        this.value.set(Math.floor(Math.random() * 10));
+      })
+    ).subscribe();
   }
 
   setIntervalTime(rateOption: RateOption) {
     this.rateOptions.update(prev => {
       return prev.map(x => ({ ...x, active: x.rate === rateOption.rate }));
-    })
+    });
     this.interval.set(Math.floor(1000 / rateOption.rate));
   }
 
