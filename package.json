@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --watch false",
+    "wtest": "ng test",
     "serve:ssr:angular-perf-app": "node dist/angular-perf-app/server/server.mjs"
   },
   "private": true,
