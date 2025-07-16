@@ -55,7 +55,8 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/angular-signals-performance/"
             },
             "development": {
               "optimization": false,
