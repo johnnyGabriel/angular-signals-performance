@@ -41,7 +41,7 @@ jobs:
       id: deployment
       uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
       with:
-        path: /home/runner/work/angular-signals-performance/angular-signals-performance/dist/angular-perf-app/browser
+        path: /home/runner/work/angular-signals-performance/angular-signals-performance/dist/browser
 
   # Deployment job
   deploy:
