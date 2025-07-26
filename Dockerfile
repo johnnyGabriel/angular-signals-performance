@@ -34,11 +34,11 @@ RUN sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
 
-# FROM node:22-alpine AS ssr
+FROM node:22-alpine AS ssr
 
-# # # Copy built files from previous stage
-# COPY --from=build /app/dist /front
+# # Copy built files from previous stage
+COPY --from=build /app/dist /front
 
-# EXPOSE 4000
+EXPOSE 4000
 
-# CMD node front/server/server.mjs
+CMD node front/server/server.mjs

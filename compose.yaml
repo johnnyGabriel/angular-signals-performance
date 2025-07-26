@@ -1,0 +1,11 @@
+services:
+  serve:
+    build:
+      target: server
+    ports:
+      - 80:8081
+  ssr:
+    build:
+      target: ssr
+    ports:
+      - 80:4000
